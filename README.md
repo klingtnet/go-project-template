@@ -17,7 +17,7 @@ $ git clone https://github.com/klingtnet/go-project-template.git
 $ cd go-project-template
 $ make
 $ ./example
-INFO[0000] Example@b9db4c8ca30e8e6301c80fc429c6829fe48164b1 build time: 2017-07-03T11:57:09+00:00
+INFO[0000] Example@0.0.1-2-g9c29ba5 build time: 2017-07-03T12:31:38+00:00
 ```
 
 ## Development

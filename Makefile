@@ -6,7 +6,7 @@ NAMESPACE	:=github.com/klingtnet/go-project-template
 WORKSPACE	:=$(GOPATH)/src/$(NAMESPACE)
 GO_SOURCES	:=$(wildcard cmd/example/*.go)
 GO_PACKAGES	:=$(dir $(GO_SOURCES))
-GO_FLAGS	:=-ldflags="-X $(NAMESPACE)/meta.Version=$(shell git rev-parse HEAD) -X $(NAMESPACE)/meta.BuildTime=$(shell date --iso-8601=seconds --utc)"
+GO_FLAGS	:=-ldflags="-X $(NAMESPACE)/meta.Version=$(shell git describe --tags --always) -X $(NAMESPACE)/meta.BuildTime=$(shell date --iso-8601=seconds --utc)"
 
 all: setup example
 
