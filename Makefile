@@ -1,12 +1,12 @@
 .PHONY: clean check-dep
 
-SHELL :=bash
-GOPATH:=$(PWD)/.go
-NAMESPACE:=github.com/klingtnet/go-project-template
-WORKSPACE:=$(GOPATH)/src/$(NAMESPACE)
-GO_SOURCES:=$(wildcard cmd/example/*.go)
-GO_PACKAGES:=$(dir $(GO_SOURCES))
-GO_FLAGS:=-ldflags="-X $(NAMESPACE)/meta.Version=$(shell git rev-parse HEAD) -X $(NAMESPACE)/meta.BuildTime=$(shell date --iso-8601=seconds --utc)"
+SHELL		:=bash
+GOPATH		:=$(PWD)/.go
+NAMESPACE	:=github.com/klingtnet/go-project-template
+WORKSPACE	:=$(GOPATH)/src/$(NAMESPACE)
+GO_SOURCES	:=$(wildcard cmd/example/*.go)
+GO_PACKAGES	:=$(dir $(GO_SOURCES))
+GO_FLAGS	:=-ldflags="-X $(NAMESPACE)/meta.Version=$(shell git rev-parse HEAD) -X $(NAMESPACE)/meta.BuildTime=$(shell date --iso-8601=seconds --utc)"
 
 all: setup example
 
