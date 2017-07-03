@@ -12,7 +12,7 @@ all: setup example
 
 example: test $(GO_SOURCES)
 	@cd $(WORKSPACE)\
-		&& go install $(NAMESPACE)/cmd/example
+		&& go install $(GO_FLAGS) $(NAMESPACE)/cmd/example
 	@cp $(GOPATH)/bin/$@ $(PWD)
 	
 test: $(GO_PACKAGES)
