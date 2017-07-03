@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/klingtnet/go-project-template/meta"
 )
 
 func main() {
-	fmt.Printf("Example@%s\nBuild time: %s", meta.Version, meta.BuildTime)
+	log.Infof("Example@%s build time: %s", meta.Version, meta.BuildTime)
 }

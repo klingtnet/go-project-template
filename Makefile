@@ -32,6 +32,7 @@ lint: check-lint $(GO_SOURCES)
 	golint $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
 
 setup: check-dep $(WORKSPACE)
+	@cd $(WORKSPACE) && dep ensure
 
 $(GOPATH):
 	@mkdir -p $@
