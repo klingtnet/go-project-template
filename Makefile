@@ -15,9 +15,9 @@ example: test $(GO_SOURCES)
 		&& go install $(GO_FLAGS) $(NAMESPACE)/cmd/example
 	@cp $(GOPATH)/bin/$@ $(PWD)
 	
-test: $(GO_PACKAGES)
+test:
 	@cd $(WORKSPACE)\
-		&& go test $(addprefix $(NAMESPACE)/,$<)
+		&& go test $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
 
 fmt: $(GO_SOURCES)
 	gofmt -w $<
