@@ -1,4 +1,4 @@
-.PHONY: clean check-dep
+.PHONY: clean test fmt vet lint setup check-dep check-lint
 
 SHELL		:=bash
 GOPATH		:=$(PWD)/.go
