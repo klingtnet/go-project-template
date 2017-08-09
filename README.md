@@ -20,6 +20,15 @@ $ ./example
 INFO[0000] Example@0.0.1-2-g9c29ba5 build time: 2017-07-03T12:31:38+00:00
 ```
 
+## Use
+
+How to use this as a start for a new project:
+
+```sh
+$ git clone --depth=1 git@github.com:klingtnet/go-project-template.git my-new-project
+# done!
+```
+
 ## Development
 
 - build the project: `make`
