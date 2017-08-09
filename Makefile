@@ -31,6 +31,9 @@ vet: $(GO_SOURCES)
 lint: check-lint $(GO_SOURCES)
 	golint $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
 
+dep: $(WORKSPACE)
+	@cd $(WORKSPACE) && dep $(ARGS)
+
 setup: check-dep $(WORKSPACE)
 	@cd $(WORKSPACE) && dep ensure
 

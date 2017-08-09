@@ -26,7 +26,14 @@ How to use this as a start for a new project:
 
 ```sh
 $ git clone --depth=1 git@github.com:klingtnet/go-project-template.git my-new-project
+# edit the Makefile's `NAMESPACE:=github.com/klingtnet/go-project-template` variable
 # done!
+```
+
+Dependencies can be added through the `dep` wrapper:
+
+```sh
+$ make ARGS='ensure github.com/foo/bar' dep
 ```
 
 ## Development
