@@ -1,5 +1,7 @@
 # Go Project Template
 
+[![Build Status](https://travis-ci.org/klingtnet/go-project-template.svg?branch=master)](https://travis-ci.org/klingtnet/go-project-template)
+
 This project acts as a template for new Go projects I develop.
 Most of my projects follow a certain structure:
 

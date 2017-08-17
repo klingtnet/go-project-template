@@ -15,7 +15,7 @@ example: test $(GO_SOURCES)
 		&& go install $(GO_FLAGS) $(NAMESPACE)/cmd/example
 	@cp $(GOPATH)/bin/$@ $(PWD)
 	
-test:
+test: setup
 	@cd $(WORKSPACE)\
 		&& go test $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
 
