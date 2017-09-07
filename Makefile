@@ -34,7 +34,7 @@ check: vet lint
 vet: $(GO_SOURCES)
 	go vet $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
 
-lint: check-lint $(GO_SOURCES)
+lint: $(GO_SOURCES)
 	golint $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
 
 dep: $(WORKSPACE)
