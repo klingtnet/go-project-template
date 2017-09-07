@@ -1,4 +1,4 @@
-.PHONY: clean test fmt vet lint setup check-dep check-lint
+.PHONY: clean test fmt vet lint check-dep check-lint
 
 SHELL		:=bash
 GOPATH		:=$(PWD)/.go
@@ -6,19 +6,24 @@ NAMESPACE	:=github.com/klingtnet/go-project-template
 WORKSPACE	:=$(GOPATH)/src/$(NAMESPACE)
 GO_SOURCES	:=$(wildcard cmd/example/*.go)
 GO_PACKAGES	:=$(dir $(GO_SOURCES))
-GO_FLAGS	:=-ldflags="-X $(NAMESPACE)/meta.Version=$(shell git describe --tags --always) -X $(NAMESPACE)/meta.BuildTime=$(shell date --iso-8601=seconds --utc)"
+VERSION	:=$(shell git describe --tags --always)
+GO_FLAGS	:=-ldflags="-X $(NAMESPACE)/meta.Version=$(VERSION) -X $(NAMESPACE)/meta.BuildTime=$(shell date --iso-8601=seconds --utc)"
+DEP_ARGS	:=-v
 
-all: setup example
+all: example
 
-example: test $(GO_SOURCES)
+example: setup.lock test $(GO_SOURCES)
 	@touch meta/meta.go
 	@cd $(WORKSPACE)\
 		&& go install $(GO_FLAGS) $(NAMESPACE)/cmd/example
 	@cp $(GOPATH)/bin/$@ $(PWD)
 	
-test: setup
+test: setup.lock
 	@cd $(WORKSPACE)\
 		&& go test $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
+
+setup.lock: $(WORKSPACE) vendor
+	@echo $(VERSION) > setup.lock
 
 fmt: $(GO_SOURCES)
 	gofmt -w $<
@@ -35,8 +40,8 @@ lint: check-lint $(GO_SOURCES)
 dep: $(WORKSPACE)
 	@cd $(WORKSPACE) && dep $(ARGS)
 
-setup: check-dep $(WORKSPACE)
-	@cd $(WORKSPACE) && dep ensure
+vendor: Gopkg.toml Gopkg.lock
+	@cd $(WORKSPACE) && dep ensure $(DEP_ARGS)
 
 $(GOPATH):
 	@mkdir -p $@
