@@ -42,7 +42,7 @@ $(GOPATH):
 	@mkdir -p $@
 
 $(WORKSPACE): $(GOPATH)
-	@mkdir -p $$(dirname $@)
+	@mkdir -p $(dir $@)
 	@ln -s $(PWD) $@
 
 check-dep:
