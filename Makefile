@@ -60,4 +60,4 @@ check-lint:
 
 clean:
 	@rm -f example
-	@rm -rf vendor
+	@rm -rf vendor .go setup.lock
