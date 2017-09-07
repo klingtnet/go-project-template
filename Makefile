@@ -1,4 +1,4 @@
-.PHONY: clean test fmt vet lint check-dep check-lint
+.PHONY: clean test fmt vet lint
 
 SHELL		:=bash
 GOPATH		:=$(PWD)/.go
@@ -49,14 +49,6 @@ $(GOPATH):
 $(WORKSPACE): $(GOPATH)
 	@mkdir -p $(dir $@)
 	@ln -s $(PWD) $@
-
-check-dep:
-	@hash dep 2>/dev/null\
-		|| (echo -e "dep is missing:\ngo get -u github.com/golang/dep/cmd/dep"; false)
-
-check-lint:
-	@hash golint 2>/dev/null\
-		|| (echo -e "golint is missing:\ngo get -u github.com/golang/lint/golint"; false)
 
 clean:
 	@rm -f example
