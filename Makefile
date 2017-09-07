@@ -11,6 +11,7 @@ GO_FLAGS	:=-ldflags="-X $(NAMESPACE)/meta.Version=$(shell git describe --tags --
 all: setup example
 
 example: test $(GO_SOURCES)
+	@touch meta/meta.go
 	@cd $(WORKSPACE)\
 		&& go install $(GO_FLAGS) $(NAMESPACE)/cmd/example
 	@cp $(GOPATH)/bin/$@ $(PWD)
