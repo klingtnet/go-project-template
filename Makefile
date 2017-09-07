@@ -42,6 +42,7 @@ dep: $(WORKSPACE)
 
 vendor: Gopkg.toml Gopkg.lock
 	@cd $(WORKSPACE) && dep ensure $(DEP_ARGS)
+	@touch $@
 
 $(GOPATH):
 	@mkdir -p $@
