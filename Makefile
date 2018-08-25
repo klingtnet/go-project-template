@@ -10,7 +10,7 @@ BUILD_DATE	:=$(shell date --iso-8601=seconds --utc)
 endif
 
 VERSION		:=$(shell git describe --tags --always)
-META_PACKAGE_IMPORT_PATH := $(shell vgo list -f '{{ .ImportPath }}' ./meta)
+META_PACKAGE:=$(shell vgo list -f '{{ .ImportPath }}' ./meta)
 GO_FLAGS	:=-ldflags="-X $(META_PACKAGE_IMPORT_PATH).Version=$(VERSION) -X $(META_PACKAGE_IMPORT_PATH).BuildTime=$(BUILD_DATE)"
 
 all: example
