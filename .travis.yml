@@ -2,6 +2,7 @@ language: go
 
 before_install:
   - go get -u golang.org/x/vgo
+  - go get -u golang.org/x/lint/golint
 
 go:
   - 1.10.x
