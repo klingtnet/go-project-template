@@ -27,7 +27,7 @@ INFO[0000] Example@0.0.1-2-g9c29ba5 build time: 2017-07-03T12:31:38+00:00
 How to use this as a start for a new project:
 
 ```sh
-$ git clone --depth=1 git@github.com:klingtnet/go-project-template.git my-new-project
+$ git clone --depth=1 https://github.com/klingtnet/go-project-template.git my-new-project
 # edit the Makefile's `NAMESPACE:=github.com/klingtnet/go-project-template` variable
 # done!
 ```

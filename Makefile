@@ -1,56 +1,40 @@
 .PHONY: clean test fmt vet lint
 
-SHELL		:=bash
-GOPATH		:=$(PWD)/.go
-NAMESPACE	:=github.com/klingtnet/go-project-template
-WORKSPACE	:=$(GOPATH)/src/$(NAMESPACE)
-GO_SOURCES	:=$(wildcard cmd/example/*.go)
-GO_PACKAGES	:=$(dir $(GO_SOURCES))
-VERSION	:=$(shell git describe --tags --always)
-GO_FLAGS	:=-ldflags="-X $(NAMESPACE)/meta.Version=$(VERSION) -X $(NAMESPACE)/meta.BuildTime=$(shell date --iso-8601=seconds --utc)"
-DEP_ARGS	:=-v
+GO_SOURCES	:=$(shell vgo list -f '{{ range $$element := .GoFiles }}{{ $$.Dir }}/{{ $$element }}{{ "\n" }}{{ end }}' ./...)
+
+SYSTEM:=$(shell uname)
+ifeq ($(SYSTEM), Darwin)
+BUILD_DATE	:=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+else
+BUILD_DATE	:=$(shell date --iso-8601=seconds --utc)
+endif
+
+VERSION		:=$(shell git describe --tags --always)
+META_PACKAGE_IMPORT_PATH := $(shell vgo list -f '{{ .ImportPath }}' ./meta)
+GO_FLAGS	:=-ldflags="-X $(META_PACKAGE_IMPORT_PATH).Version=$(VERSION) -X $(META_PACKAGE_IMPORT_PATH).BuildTime=$(BUILD_DATE)"
 
 all: example
 
-example: setup.lock test $(GO_SOURCES)
+example: test $(GO_SOURCES)
 	@touch meta/meta.go
-	@cd $(WORKSPACE)\
-		&& go install $(GO_FLAGS) $(NAMESPACE)/cmd/example
-	@cp $(GOPATH)/bin/$@ $(PWD)
+	@vgo build $(GO_FLAGS) ./cmd/example
 	
-test: setup.lock
-	@cd $(WORKSPACE)\
-		&& go test $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
-
-setup.lock: $(WORKSPACE) vendor
-	@echo $(VERSION) > setup.lock
+test: fmt check $(GO_SOURCES)
+	@vgo test ./...
 
 fmt: $(GO_SOURCES)
-	gofmt -w $<
-	goimports -w $<
+ifneq ($(shell gofmt -d -l .),)
+	@echo "Please run 'gofmt -w .'"
+	@gofmt -d -l . && exit 1
+endif
 
 check: vet lint
 
 vet: $(GO_SOURCES)
-	go vet $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
+	@vgo tool vet .
 
 lint: $(GO_SOURCES)
-	golint $(addprefix $(NAMESPACE)/,$(GO_PACKAGES))
-
-dep: $(WORKSPACE)
-	@cd $(WORKSPACE) && dep $(ARGS)
-
-vendor: Gopkg.toml Gopkg.lock
-	@cd $(WORKSPACE) && dep ensure $(DEP_ARGS)
-	@touch $@
-
-$(GOPATH):
-	@mkdir -p $@
-
-$(WORKSPACE): $(GOPATH)
-	@mkdir -p $(dir $@)
-	@ln -s $(PWD) $@
+	@golint -set_exit_status=1  ./...
 
 clean:
 	@rm -f example
-	@rm -rf vendor .go setup.lock
