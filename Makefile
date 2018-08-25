@@ -1,5 +1,3 @@
-.PHONY: clean test fmt vet lint
-
 GO_SOURCES	:=$(shell vgo list -f '{{ range $$element := .GoFiles }}{{ $$.Dir }}/{{ $$element }}{{ "\n" }}{{ end }}' ./...)
 
 SYSTEM:=$(shell uname)
