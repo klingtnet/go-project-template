@@ -1,5 +1,2 @@
-/vendor/
 /*.swp
-/.go/
 /example
-/setup.lock
