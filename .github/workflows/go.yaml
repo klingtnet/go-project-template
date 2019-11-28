@@ -1,0 +1,21 @@
+
+name: Go
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [ '1.11', '1.12', '1.13' ]
+    name: Test Go ${{ matrix.go }}
+    steps:
+    - uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go }}
+    - uses: actions/checkout@v1
+    - name: Run Test with Go ${{ matrix.go }}
+      env:
+        GOPATH: /home/runner/go
+      run: |
+        go get -u golang.org/x/lint/golint
+        PATH=${GOPATH}/bin:$PATH make test
